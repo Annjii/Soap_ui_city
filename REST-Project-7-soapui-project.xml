@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="535ac84e-8de3-4b3f-bd6f-ff91611aa227" activeEnvironment="Default" name="REST Project 7" resourceRoot="" soapui-version="5.7.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite id="aad43f70-4af1-4bca-8129-5cc7ef788ec1" name="TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="81f6f513-d943-4fde-b915-d5a4140a7306" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Get" id="dd495dfd-97c0-43f3-91a1-765798c8ed32"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="8f342556-3926-4a7c-bbc0-a0e1cf2fd289" name="Get" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://restcountries.com/v3.1/capital/lima</con:endpoint><con:request/><con:assertion type="Simple Contains" id="7b31fa43-c7fb-4f55-86ff-49d9c5fa23d9" name="Contains"><con:configuration><token>"Americas"</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" id="eb187026-161f-4b29-a21c-aa76fad1f40a" name="Script Assertion"><con:configuration><scriptText>import groovy.json.JsonSlurper
+
+def Rep = messageExchange.response.responseContent
+def json = new JsonSlurper().parseText(Rep)
+
+assert ["Americas"] == json.region
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Get Groovy Script" id="7a2439c8-fa20-4bbb-bb0a-f44db1873bc2"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+import jxl.*
+import jxl.write.*
+
+Workbook book = Workbook.getWorkbook(new File("C:\\Users\\mindc1may266\\Desktop\\M1089290Reattemp\\City.xls"));
+Sheet book1 = book.getSheet(0)
+
+def pen = book1.getCell(1,1).getContents()
+def step = testRunner.testCase.getTestStepByName("Get")
+
+
+step.setPropertyValue("Endpoint","https://restcountries.com/v3.1/capital/" + pen)
+testRunner.runTestStepByName("Get")
+testRunner.testCase.getTestStepByName("Get").getPropertyValue("Response")</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
