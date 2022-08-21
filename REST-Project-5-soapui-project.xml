@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="c88ae16e-5ba1-433c-9754-db6832db3176" activeEnvironment="Default" name="REST Project 5" resourceRoot="" soapui-version="5.7.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:testSuite id="155f70a3-6b47-42ca-b055-a9c611cf7b9b" name="TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="9a14ab34-9f92-4d52-935f-ac74e038cc10" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true"><con:settings/><con:testStep type="httprequest" name="Get" id="838d6c1f-efdf-48fe-8465-b2776139bc38"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="c4447fba-6560-4eb9-8c0a-167bfac30078" name="Get" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://restcountries.com/v2/currency/Pen</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" id="ac8134e8-29a5-494d-9f46-eec009c8838a" name="Script Assertion"><con:configuration><scriptText>import groovy.json.JsonSlurper
+
+def Rep = messageExchange.response.responseContent
+def json = new JsonSlurper().parseText(Rep)
+
+assert ["South America"] == json.subregion
+assert ["Lima"] == json.capital
+
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:testStep type="groovy" name="Groovy Script" id="8f3a4c5d-b47e-4262-8b28-822fbf5b4a15"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+import jxl.*
+import jxl.write.*
+
+Workbook book = Workbook.getWorkbook(new File("C:\\Users\\mindc1may266\\Desktop\\M1089290 Comprehensive\\Webservice\\curency.xls"))
+Sheet Sheet1 = book.getSheet(0)
+
+def pen = Sheet1.getCell(1,1).getContents()
+def step = testRunner.testCase.getTestStepByName("Get")
+
+step.setPropertyValue("EndPoint","https://restcountries.com/v2/currency/"+ pen)
+testRunner.runTestStepByName("Get")
+testRunner.testCase.getTestStepByName("Get").getPropertyValue("Response")</script></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
